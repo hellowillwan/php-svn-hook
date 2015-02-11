@@ -18,9 +18,11 @@ function svn_get_commited_files($repo, $trx) {
     //fwrite(STDERR, "DEBUG: Change line: $line\n");
     if (in_array(substr($line,0,1), array('A', 'U'))){
       $filename = substr($line,4);
-      unset($content);  // Mandatory otherwise, exec will append new content
-      exec("svnlook cat $repo $filename -t $trx", $content);
-      $commitedFiles[$filename] = $content;
+      if(preg_match('/\.php$/',$filename) === 1) {
+        unset($content);  // Mandatory otherwise, exec will append new content
+        exec("svnlook cat $repo $filename -t $trx", $content);
+        $commitedFiles[$filename] = $content;
+      }
     }
     
   }
