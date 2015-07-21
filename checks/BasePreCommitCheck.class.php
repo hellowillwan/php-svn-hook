@@ -29,7 +29,7 @@ abstract class BasePreCommitCheck {
       }
     }
 
-    if ($php_file_found === true) {
+    if (isset($php_file_found) and $php_file_found === true) {
       $result = $this->checkSvnComment($this->svnComment);
       if ($result !== null){
         $this->globalError[] = $result;
