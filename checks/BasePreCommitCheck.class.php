@@ -18,10 +18,22 @@ abstract class BasePreCommitCheck {
   
   public function runCheck($svnCommitedFiles){
     
-    // Check on the comment
-    $result = $this->checkSvnComment($this->svnComment);
-    if ($result !== null){
-      $this->globalError[] = $result;
+    // Check on the comment only if commit .php files
+    $svnCommitedFiles_names = array_keys($svnCommitedFiles);
+    foreach($svnCommitedFiles_names as $file_name){
+      if(stripos($file_name,'.php') === false){
+        continue;
+      } else {
+        $php_file_found = true;
+        break;
+      }
+    }
+
+    if ($php_file_found === true) {
+      $result = $this->checkSvnComment($this->svnComment);
+      if ($result !== null){
+        $this->globalError[] = $result;
+      }
     }
     
     // Check on the files

@@ -17,7 +17,7 @@ class EmptyCommentCheck extends BasePreCommitCheck {
     $valuableComment = preg_replace('/(^|\s*)(--\S+)(\s*|$)/', '', $comment);
 
     // Only consider Words in the count
-    $valuableComment = preg_replace('/\W+/', '', $valuableComment); 
+    //$valuableComment = preg_replace('/\W+/', '', $valuableComment);	// this not support Chinese 
 
     if (strlen($valuableComment) < 5){
       return 'Commit message has been rejected (too short). Please provide more details about changes you want to commit.';
