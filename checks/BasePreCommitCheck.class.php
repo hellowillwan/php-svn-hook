@@ -17,9 +17,17 @@ abstract class BasePreCommitCheck {
   abstract function renderErrorSummary();
   
   public function runCheck($svnCommitedFiles){
-    
-    // Check on the comment only if commit .php files
     $svnCommitedFiles_names = array_keys($svnCommitedFiles);
+
+    // Check if commiting 'node_modules'
+    foreach($svnCommitedFiles_names as $file_name){
+      if(stripos($file_name,'node_modules') !== false){
+        $this->globalError[] = "'node_modules' are not allowed to commit.";
+        return false;
+      }
+    }
+
+    // Check on the comment only if commit .php files
     foreach($svnCommitedFiles_names as $file_name){
       if(stripos($file_name,'.php') === false){
         continue;

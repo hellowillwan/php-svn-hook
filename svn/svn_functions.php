@@ -22,6 +22,8 @@ function svn_get_commited_files($repo, $trx) {
         unset($content);  // Mandatory otherwise, exec will append new content
         exec("svnlook cat $repo $filename -t $trx", $content);
         $commitedFiles[$filename] = $content;
+      } else {
+        $commitedFiles[$filename] = '';
       }
     }
     
